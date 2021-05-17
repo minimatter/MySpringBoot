@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://127.0.0.1:3306/springDB?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+    username: root
+    password: 111111
+
+
+mybatis:
+  driver-class-name: com.mysql.jdbc.Driver
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: end.bean
+
+mapper:
+  mappers:  end.dao
+  not-empty: false
+  identity: MYSQL
+
+#文件上传路径
+upload:
+  uploadPath: D://images/
+
+#pagehelper
+pageHelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  returnPageInfo: check
+

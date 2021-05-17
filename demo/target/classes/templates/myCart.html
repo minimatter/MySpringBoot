@@ -1,0 +1,115 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="index.html">
+
+
+<div layout:fragment="content" class="main ">
+    <blockquote class="layui-elem-quote">
+        <h1>我的购物车</h1>
+    </blockquote>
+    <h3 id="tips"></h3>
+    <br>
+    <div th:if="${success}!=null">
+    <i class="layui-icon layui-icon-ok" style="font-size: 30px; color: #5FB878;display: inline"></i>
+    <h1 th:text="${success}" style="color:#5FB878;display: inline"></h1>
+    </div>
+    <br>
+
+
+    <table  class="layui-table" style="text-align: center">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <td  align="center">品 名</td>
+            <td  align="center">单 价</td>
+            <td  align="center">数 量</td>
+            <td  align="center">操 作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cartitem:${session.cartList}">
+
+            <td th:text="${cartitem.proName}"></td>
+            <td th:text="${cartitem.price}"></td>
+            <td th:text="${cartitem.num}"></td>
+            <td>
+
+                <a th:onclick="'deleteCart('+${cartitem.pid}+')'">
+                    <button class="layui-btn layui-btn-danger">移除</button>
+                </a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <p>&nbsp;</p>
+    <div th:text="购物车总价+${session.sum}"></div>
+    <p>&nbsp;</p>
+    <form class="layui-form" action="order" method="post" id="productForm" enctype="multipart/form-data">
+
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">收货地址:</label>
+            <div class="layui-input-inline">
+                <input  type="text" id="addr" name="addr" required lay-verify="required" placeholder="请输入收货地址"
+                       autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系电话:</label>
+            <div class="layui-input-inline">
+
+                <input  type="text" id="tel" name="tel" required lay-verify="required" placeholder="请输入联系电话"
+                        autocomplete="off"
+                        class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" id="add" class="layui-btn" lay-submit lay-filter="formDemo">订购</button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+
+    </script>
+    <script>
+
+        $(document).ready(function () {
+
+            if ([[${state}]] == 500) {
+                $("#tips").append("<h1>您还没有登录！登录后购物车的商品将保存到您账号中</h1>"
+                    + "<a href='../user/toLogin'>"
+                    + "<button>立即登录</button>"
+                    + "</a>"
+                )
+            }
+        })
+
+        function deleteCart(pid) {
+            $.ajax({
+                url: 'deleteCart',
+                type: 'get',
+                data: 'pid=' + pid,
+                success: function () {
+
+                    layer.msg("删除成功!");
+                    location.reload();
+                }
+            })
+        }
+
+
+    </script>
+</div>

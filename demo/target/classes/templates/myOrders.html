@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="index.html">
+<div layout:fragment="content" class="main ">
+
+    <blockquote class="layui-elem-quote">
+        <h1 >订单列表</h1>
+    </blockquote>
+    <table lay-filter="demo" class="layui-table"  lay-size="lg">
+<tr> <td>编号</td> <td>明细</td><td>总价</td><td>订购时间</td><td>订单状态</td></tr>
+    <tr name="" th:each="order:${orders}">
+        <td th:text="${order.id}"></td>
+        <td>  <a th:href="@{../toOrderItem(id=${order.id})}"> 点击打开订单明细 </a></td>
+
+        <td th:text="${order.total}"></td>
+        <td th:text="${order.time}"></td>
+        <td th:text="${order.status}"></td>
+
+    </tr>
+
+        <tr th:if="${#lists.isEmpty(orders)}">
+            <td>
+                <h1 style="color:#FF5722">您目前没有订单!</h1>
+            </td>
+        </tr>
+</table>
+
+
+<p>&nbsp;</p>
+</div>>

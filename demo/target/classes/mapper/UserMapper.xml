@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="end.dao.UserDao">
+    <select id="queryUser"  resultType="end.bean.User">
+       SELECT
+       tb_user.id,username,password,rid,role.rolename as ridStr
+       FROM
+       tb_user,role
+       WHERE
+        tb_user.rid=role.id
+    </select>
+
+
+
+    <select id="selectUser" parameterType="java.util.Map" resultType="end.bean.User">
+        SELECT
+        id,username,password,rid
+        FROM
+        tb_user
+        WHERE
+        <if test="userName!=null and passWord!=null">
+            username=#{userName} AND password=MD5(#{passWord})
+        </if>
+
+        <if test="id!=null">
+            id=#{id}
+        </if>
+
+
+    </select>
+    <select id="queryRole" resultType="end.bean.Role">
+        SELECT
+        id,rolename
+        FROM
+        role
+    </select>
+
+    <insert id="insertUser" parameterType="end.bean.User">
+        insert into
+        tb_user(username,password,rid)
+        values
+        (#{userName},MD5(#{passWord}),#{rid})
+    </insert>
+
+    <update id="updateUser" parameterType="end.bean.User">
+        update
+        tb_user
+        <set>
+        <if test="userName!=null and userName !='' ">
+        username=#{userName},
+        </if>
+
+        <if test="passWord!=null and passWord !=''">
+        password=MD5(#{passWord}),
+        </if>
+
+        <if test="rid !=null and rid!=-1">
+        rid=#{rid}
+        </if>
+
+
+        </set>
+        where
+        id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete from
+        tb_user
+        where
+        id=#{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="index.html">
+<div layout:fragment="content" class="main ">
+
+    <blockquote class="layui-elem-quote">
+        <h1 >订单详情</h1>
+    </blockquote>
+    <table class="layui-table" style="text-align: center">
+
+        <tr>
+            <td>编号</td>
+            <td>品 名</td>
+            <td>价格</td>
+            <td>数量</td>
+        </tr>
+        <tr th:each="orderitem:${orderItems}">
+            <td th:text="${orderitem.id}"></td>
+            <td th:text="${orderitem.proName}"></td>
+            <td th:text="${orderitem.price}"></td>
+            <td th:text="${orderitem.num}"></td>
+
+        </tr>
+
+    </table>
+</div>

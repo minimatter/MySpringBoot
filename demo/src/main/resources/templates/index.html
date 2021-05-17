@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" lang="en">
+
+<script th:src="@{../layui/layui.all.js}"></script>
+<script th:src="@{../js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{../js/jquery.validate.min.js}"></script>
+<script th:src="@{../js/jquery.form.js}"></script>
+
+<link rel="stylesheet" th:href="@{../layui/css/layui.css}">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>后台</title>
+</head>
+<style>
+
+    .body {
+        margin: 0 auto;
+        width: 70%;
+
+        /*设置padding-bottom值大于等于footer的height值，以保证main的内容能够全部显示出来而不被footer遮盖；*/
+        padding-bottom: 500px;
+        background: #f2f2f2;
+    }
+
+    footer {
+        position: relative;
+        color: #fff;
+        bottom: 0;
+        width: 100%;
+        height: 50px;
+        text-align: center;
+        background-color: #393D49;
+    }
+</style>
+
+<body>
+<!--<div style="position: fixed;top:0;width:100%;">-->
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+
+        <ul class="layui-nav" lay-filter="">
+            <div style="margin: 0 15%;width: auto">
+
+                <li class="layui-nav-item"><a th:href="@{../product/toProductList}">商品列表</a></li>
+                <li class="layui-nav-item"><a th:href="@{../product/toProductAdd}">添加商品</a></li>
+                <li class="layui-nav-item"><a th:href="@{../user/toUserList}">用户列表</a></li>
+                <!--            <li class="layui-nav-item">-->
+                <!--                <a href="javascript:;">解决方案</a>-->
+                <!--                <dl class="layui-nav-child"> &lt;!&ndash; 二级菜单 &ndash;&gt;-->
+
+                <!--                    <dd><a th:href="@{../toMyOrders}">我的订单</a></dd>-->
+                <!--                </dl>-->
+                <!--            </li>-->
+                <!--            <li class="layui-nav-item"><a href="">社区</a></li>-->
+
+
+                <div style="float: right">
+                    <li class="layui-nav-item">
+                        <a th:href="@{../toMyCart}">购物车
+                            <span class="layui-badge-dot"></span>
+                        </a>
+                    </li>
+
+                    <li th:if="${session.user==null}" class="layui-nav-item"><a href="../user/toLogin">请先登录!</a></li>
+                    <li  th:if="${session.user!=null}" class="layui-nav-item">
+                        <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
+                        <dl class="layui-nav-child">
+                            <dd><a th:href="@{../toMyOrders}">我的订单</a></dd>
+                            <dd><a th:href="@{../user/toRegister}">注册用户</a></dd>
+                            <dd><a th:href="@{../user/toUserEdit(id=${session.user.id})}">修改信息</a></dd>
+
+                            <dd><a th:href="@{../user/quitUser}">退出</a></dd>
+                        </dl>
+                    </li>
+                </div>
+            </div>
+
+        </ul>
+
+
+        <!--</div>-->
+    </div>
+</div>
+<div class="body">
+    <!--    <div class="layui-body">-->
+
+    <div layout:fragment="content">
+        <h1>管理员账号: admin</h1>
+
+        <h1>管理员密码: admin</h1>
+    </div>
+    <!--    </div>-->
+
+
+</div>
+<footer class="foot">
+    helloWorld
+</footer>
+
+
+
+
+
+
+<script th:src="@{../layui/layui.all.js}"></script>
+<script>
+
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+
+    // 引入了两个js一个layer.js一个layui.js导致layer的东西不能正常使用
+
+    // 删掉layer.js即可,并且进行实例话layer
+    layui.use('layer', function () {
+        var layer = layui.layer;
+    });
+
+    // layui.use('form', function () {
+    //     var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+    //
+    // });
+
+    // //
+    // function quitUser(){
+    //     if (session != null) {
+    //         session.invalidate();//调用session的invalidate()方法，将保存的session删除
+    //     }
+    //     j.setSuccess(true);
+    //     j.setMsg("退出登录成功！");
+    //     return j;
+    //
+    // }
+
+
+    console.log("hello");
+
+
+</script>
+</body>
+</html>

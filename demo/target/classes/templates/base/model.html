@@ -1,0 +1,93 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Proton - Admin Template</title>
+
+    <!-- Import google fonts - Heading first/ text second -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.useso.com/css?family=Open+Sans:400,700|Droid+Sans:400,700' />
+    <!--[if lt IE 9]>
+    <link href="http://fonts.useso.com/css?family=Open+Sans:400" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.useso.com/css?family=Open+Sans:700" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.useso.com/css?family=Droid+Sans:400" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.useso.com/css?family=Droid+Sans:700" rel="stylesheet" type="text/css" />
+    <![endif]-->
+
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" th:href="@{../ico/favicon.ico}" type="image/x-icon" />
+
+    <!-- Css files -->
+    <link th:href="@{../css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{../css/jquery.mmenu.css}" rel="stylesheet">
+    <link th:href="@{../css/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{../plugins/jquery-ui/css/jquery-ui-1.10.4.min.css}" rel="stylesheet">
+    <link th:href="@{../plugins/chosen/css/chosen.css}" rel="stylesheet">
+    <link th:href="@{../css/style.min.css}" rel="stylesheet">
+    <link th:href="@{../css/add-ons.min.css}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+</head>
+
+<body>
+
+<div layout:fragment="content"></div>
+
+
+
+
+    <div class="clearfix"></div>
+
+
+    <!-- start: JavaScript-->
+    <!--[if !IE]>-->
+
+    <script th:src="@{../js/jquery-2.1.1.min.js}"></script>
+
+    <!--<![endif]-->
+
+    <!--[if IE]>
+
+
+
+    <![endif]-->
+
+    <!--[if !IE]>-->
+
+
+
+    <!--<![endif]-->
+
+    <!--[if IE]>
+
+
+
+    <![endif]-->
+    <script th:src="@{../js/jquery-migrate-1.2.1.min.js}"></script>
+    <script th:src="@{../js/bootstrap.min.js}"></script>
+
+
+    <!-- page scripts -->
+
+
+    <!-- theme scripts -->
+    <script th:src="@{../js/SmoothScroll.js}"></script>
+    <script th:src="@{../js/jquery.mmenu.min.js}"></script>
+    <script th:src="@{../js/core.min.js}"></script>
+
+    <!-- inline scripts related to this page -->
+
+
+    <!-- end: JavaScript-->
+
+</body>
+</html>

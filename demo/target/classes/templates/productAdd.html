@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="index.html">
+
+<div layout:fragment="content" class="main ">
+    <blockquote class="layui-elem-quote">
+        <h1>添加商品</h1>
+    </blockquote>
+
+
+
+
+    <form class="layui-form" action="" id="productForm" enctype="multipart/form-data">
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品名称</label>
+            <div class="layui-input-inline">
+
+                <input type="text" name="proName" required lay-verify="required" placeholder="请输入商品名称"
+                       autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品价格</label>
+            <div class="layui-input-inline">
+
+                <input type="text" name="price" required lay-verify="required" placeholder="请输入商品价格" autocomplete="off"
+                       class="layui-input">
+
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品数量</label>
+            <div class="layui-input-inline">
+                <input type="text" name="num" required lay-verify="required" placeholder="请输入商品数量" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品类型</label>
+            <div class="layui-input-inline">
+                <select id="sortList" name="sid" lay-verify="required"></select>
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item layui-form-text">
+
+            <label class="layui-form-label">商品描述</label>
+            <div class="layui-input-block">
+                <textarea name="proDetail" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品图片</label>
+            <div class="layui-input-block">
+                <input type="file" name="productPicture" multiple>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="button" class="layui-btn layui-btn-primary" onclick="history.back()">返回</button>
+
+            </div>
+        </div>
+        <br>
+    </form>
+
+
+    <script>
+        $.ajax({
+            url: 'getSortList',
+            type: 'get',
+            success: function (data) {
+                for (var i in data) {
+                    $("#sortList").append("<option value=" + data[i].id + ">" + data[i].sortName + "</option>")
+                    console.log(data[i]);
+
+                }
+                layui.use('form', function(){
+                    var form = layui.form;
+
+                    //各种基于事件的操作，下面会有进一步介绍
+
+                    //但是，如果你的HTML是动态生成的，自动渲染就会失效
+                    //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+                    form.render('select');
+                });
+
+
+            }
+        })
+
+
+        // $("#addButton").click(function (){
+        //
+        //     $.ajax({
+        //         url:'productAdd',
+        //         type:'post',
+        //         data:$("#productForm").serialize(),
+        //         success:function(data){
+        //             layer.msg("添加成功");
+        //             setTimeout(function (){
+        //                 window.location=("toUserList")
+        //             },1500);
+        //         }
+        //     })
+        //
+        //
+        //
+        // })
+
+        $("#productForm").validate({
+
+            submitHandler: function (form) {
+
+                $("#productForm").ajaxSubmit({
+                    url: 'productAdd',
+                    type: 'post',
+                    success: function (data) {
+                        layer.msg("添加成功");
+                        setTimeout(function () {
+                            window.location = ("../product/toProductList")
+                        }, 1500);
+                    }
+                });
+
+
+            }
+
+
+        })
+
+
+    </script>
+</div>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="index.html">
+
+
+<div layout:fragment="content" class="main ">
+
+
+<div  id="show_div">
+
+    <blockquote class="layui-elem-quote">
+        <h1 style="display: inline">修改的账号：</h1>
+        <h1 style="display: inline" th:text="${alterUser.userName}"></h1>
+    </blockquote>
+
+        <form id="registerForm" class="layui-form" >
+
+
+            <input type="hidden" th:value="${alterUser.id}" name="id">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">修改用户名称</label>
+                <div class="layui-input-inline">
+                    <input type="text"  name="userName"
+                           placeholder="修改用户名称" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">修改用户密码</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="confirmPwdID" name="passWord"
+                           placeholder="修改用户密码" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户类型</label>
+                <div class="layui-input-inline">
+                    <select id="roleList" name="rid" lay-verify="required">
+
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button  type="button" class="layui-btn" lay-submit lay-filter="formDemo" id="submitBtn">立即提交</button>
+                    <button type="button" class="layui-btn layui-btn-primary" onclick="history.back()">返回</button>
+
+                </div>
+            </div>
+            <br>
+        </form>
+    </div>
+
+
+
+<script>
+    var userRid=[[${alterUser.rid}]];
+    $.ajax({
+        url: 'getRoleList',
+        type: 'get',
+        success: function (data) {
+            for (var i in data) {
+                if(userRid==data[i]){
+                    $("select").append("<option value=" + data[i].id + "selected='selected'>" + data[i].roleName + "</option>")
+                }
+                $("select").append("<option value=" + data[i].id + ">" + data[i].roleName + "</option>")
+            }
+
+            layui.use('form', function () {
+                var form = layui.form;
+
+                //各种基于事件的操作，下面会有进一步介绍
+
+                //但是，如果你的HTML是动态生成的，自动渲染就会失效
+                //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+                form.render('select');
+            });
+
+
+        }
+    })
+
+
+    $("#submitBtn").click(function () {
+
+        $.ajax({
+            url: 'edit',
+            type: 'post',
+            data: $('#registerForm').serialize(),
+            success: function (data) {
+                if (data) {
+                    layer.msg("修改成功！");
+                    setTimeout(function () {
+                        window.location = ("../user/toUserList");
+                    }, 1500);
+
+                } else {
+                    layer.msg("请输入正确的旧密码！");
+                }
+            }
+
+
+        })
+
+    })
+</script>
+</div>

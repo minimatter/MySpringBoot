@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="index.html">
+
+
+<div layout:fragment="content" class="main ">
+
+    <blockquote class="layui-elem-quote">
+        <h1 style="display: inline">修改信息：</h1>
+    </blockquote>
+    <br>
+    <form id="modularForm" class="layui-form" action="">
+
+        <input type="hidden" th:value="${alterUser.id}" name="id">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input th:value="${alterUser.userName}" type="text" name="userName" required lay-verify="required"
+                       placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">旧密码</label>
+            <div class="layui-input-block">
+                <input type="agePwd" name="agePwd" required lay-verify="required" placeholder="请输入旧密码"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-block">
+                <input type="agePwd" name="passWord" required lay-verify="required" placeholder="请输入新密码"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button id="submitBtn" class="layui-btn" onclick="return false;" >保存</button>
+                <button type="button" onclick="history.back()" class="layui-btn layui-btn-primary">返回</button>
+            </div>
+        </div>
+    </form>
+
+
+
+
+    <script>
+
+        $("#submitBtn").click(function () {
+
+            $.ajax({
+                url: 'edit',
+                type: 'post',
+                data: $('#modularForm').serialize(),
+                success: function (data) {
+                    if (data) {
+                        layer.msg("修改成功！请登录!");
+                        setTimeout(function () {
+                            window.location = ("../user/toLogin");
+                        }, 1500);
+
+                    } else {
+                        layer.msg("请输入正确的旧密码！");
+                    }
+                }
+
+
+            })
+
+        })
+
+
+    </script>
+
+
+</div>

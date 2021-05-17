@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="end.dao.ProductDao">
+    <select id="queryProduct" resultType="end.bean.Product" parameterType="java.util.Map">
+        SELECT
+        product.id,pro_name as proName,pro_detail as proDetail,pic as fileName,price,num,sid,time,sort.sortname AS
+        sortName
+        FROM
+        product,sort
+        WHERE
+        product.sid=sort.id
+        <if test="id!=null">
+            and product.id=#{id}
+        </if>
+
+        <if test="pro_name!=null">
+            and pro_name=#{proName}
+        </if>
+
+        <if test="sid!=null">
+            and sid=#{sid}
+        </if>
+
+        <if test="order != null and order!=''">
+            ORDER BY ${order}
+        </if>
+
+    </select>
+    <select id="querySort" resultType="end.bean.Sort">
+        SELECT
+        id,sortname
+        FROM
+        sort
+    </select>
+
+    <insert id="insertProduct" parameterType="end.bean.Product">
+        insert into
+        product(pro_name,pro_detail,pic,price,num,sid,time)
+        values
+        (#{proName},#{proDetail},#{fileName},#{price},#{num},#{sid},#{time})
+    </insert>
+
+    <update id="updateProduct" parameterType="end.bean.Product">
+        update
+        product
+        <set>
+            <if test="proName!=null">
+                pro_name=#{proName},
+            </if>
+
+            <if test="proDetail!=null">
+                pro_detail=#{proDetail},
+            </if>
+
+            <if test="price!=null">
+                price=#{price}
+            </if>
+
+
+        </set>
+        where
+        id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete from
+        tb_user
+        where
+        id=#{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="index.html">
+
+
+<div layout:fragment="content" class="main ">
+
+    <form id="registerForm" class="layui-form"  >
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" id="userNameID" name="userName" required lay-verify="required" placeholder="请输入用户名"
+                       autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input type="password" id="userPwdID" name="passWord" required lay-verify="required" placeholder="请输入密码"
+                       autocomplete="off"
+                       class="layui-input">
+
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码</label>
+            <div class="layui-input-inline">
+                <input type="password" id="confirmPwdID" name="confirm_password" required lay-verify="required"
+                       placeholder="请确认密码" autocomplete="off"
+                       class="layui-input">
+
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户类型</label>
+            <div class="layui-input-inline">
+
+                <select id="roleList" name="rid" lay-verify="required"></select>
+            </div>
+        </div>
+
+
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit lay-filter="formDemo" id="registerButton">立即提交</button>
+                <button type="button" class="layui-btn layui-btn-primary" onclick="history.back()">返回</button>
+
+            </div>
+        </div>
+        <br>
+    </form>
+
+    <!--<form id="registerForm" enctype="multipart/form-data" class="form-horizontal"  style="margin:40px;">-->
+
+
+    <!--    <div class="form-group">-->
+    <!--        <label class="col-sm-2 control-label">用户名</label>-->
+    <!--        <div class="col-sm-8">-->
+    <!--            <input id="userNameID" type="text" name="userName" class="form-control">-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+
+    <!--    <div class="form-group">-->
+
+    <!--        <label class="col-sm-2 control-label">密码</label>-->
+    <!--        <div class="col-sm-8">-->
+    <!--            <input id="userPwdID" type="password" name="passWord" class="form-control" >-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    <div class="form-group">-->
+
+    <!--        <label class="col-sm-2 control-label">确认密码</label>-->
+    <!--        <div class="col-sm-8">-->
+    <!--            <input id="confirmPwdID" type="confirm_password" name="confirm_password" class="form-control" >-->
+
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    <div class="form-group">-->
+    <!--        <label class="col-sm-2 control-label">请选择用户类型</label>-->
+    <!--        <div class="col-sm-8">-->
+    <!--            <select class="form-control"  id="roleList" name="rid"></select>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+
+    <!--    <div class="form-group">-->
+    <!--        <div class="col-sm-offset-2 col-sm-10">-->
+    <!--            <button type="button" class="btn btn-primary" id="registerButton"  >注册</button></a>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--</form>-->
+
+
+    <script>
+
+
+        $.ajax({
+            url: 'getRoleList',
+            type: 'get',
+            success: function (data) {
+                for (var i in data) {
+                    $("#roleList").append("<option value=" + data[i].id + ">" + data[i].roleName + "</option>")
+                    console.log(data[i]);
+                }
+
+                layui.use('form', function(){
+                    var form = layui.form;
+
+                    //各种基于事件的操作，下面会有进一步介绍
+
+                    //但是，如果你的HTML是动态生成的，自动渲染就会失效
+                    //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+                    form.render('select');
+                });
+
+
+
+
+            }
+        })
+
+
+        $("#registerButton").click(function () {
+
+
+            var flag = true;
+
+
+            if ($("#userNameID").val() == "") {
+                layer.msg("用户名不能为空！");
+                flag = false;
+            } else if ($("#userPwdID").val() == "") {
+                layer.msg("密码不能为空！");
+                flag = false;
+            } else if ($("#confirmPwdID").val() == "") {
+                layer.msg("请确认密码！")
+                flag = false;
+            } else if ($("#userPwdID").val() != $("#confirmPwdID").val()) {
+                layer.msg("两次密码输入不一致！");
+                flag = false;
+            }
+
+            if (flag) {
+
+                $.ajax({
+                    url: 'register',
+                    type: 'post',
+                    data: $('#registerForm').serialize(),
+                    success: function (data) {
+                        layer.msg(" 注册成功，请登录！");
+                        setTimeout(function () {
+                            window.location = ("toLogin")
+                        }, 1000);
+                    }
+                })
+
+
+            }
+
+
+        })
+
+
+    </script>
+
+
+</div>

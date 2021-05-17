@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="index.html">
+
+
+<div layout:fragment="content" class="main ">
+
+    <blockquote class="layui-elem-quote">
+        <h1>商品列表</h1>
+    </blockquote>
+
+    <form class="layui-form" th:action="@{../product/toProductList}">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品类型</label>
+            <div class="layui-input-inline">
+                <select  id="sortList" name="sid" lay-verify="required"></select>
+            </div>
+
+            <div class="layui-input-inline">
+                <label class="layui-form-label">价格</label>
+                <input type="radio" id="ascend" name="order" value="price" title="升序" >
+                <input type="radio" id="descend" name="order" value="price DESC" title="降序">
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo">查询</button>
+                <button onclick="resetForm()" type="button" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+
+    </form>
+
+
+    <br>
+    <br>
+
+    <table lay-filter="demo" class="layui-table" lay-size="lg">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <th lay-data="{field:'index', width:100}">编号</th>
+            <th lay-data="{field:'', width:100}">商品类型</th>
+            <th lay-data="{field:'proName', width:80}">名称</th>
+            <th lay-data="{field:'price', width:80, sort:true}">价格</th>
+            <th lay-data="{field:'num', width:80, sort:true}">数量</th>
+            <th lay-data="{field:'1', width:100}">录入时间</th>
+            <th lay-data="{field:'2', width:100}">操作</th>
+
+        </tr>
+        <!--        <tr>-->
+        <!--            <th>编号</th>-->
+        <!--            <th>名称</th>-->
+        <!--            <th>价格</th>-->
+        <!--            <th>数量</th>-->
+        <!--            <th>录入时间</th>-->
+        <!--            <th>操作</th>-->
+        <!--        </tr>-->
+        </thead>
+        <tbody>
+        <tr th:each="product,productStat  : ${productList}">
+            <td th:text="${productStat.index+1}"></td>
+            <td th:text="${product.sortName}"></td>
+            <td th:text="${product.proName}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.num}"></td>
+            <td th:text="${#dates.format(product.time,'YYY-MM-dd hh-mm')}"></td>
+            <td>
+                <a th:href="@{../product/toProductDetail(id=${product.id})}">
+                    <button type="button" class="btn btn-success">详情</button>
+                </a>
+
+
+                <a>
+                    <button type="button" class="btn btn-danger">删除</button>
+                </a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+<!--    <div style="text-align: center">-->
+<!--        <span th:text="${warnStr} "></span>-->
+<!--    </div>-->
+
+    <!-- 分页 -->
+    <div th:replace="base/pagination :: pagination('toProductList')"></div>
+
+
+    <script>
+
+        function resetForm(){
+
+            $("#sortList").val("");
+
+        }
+
+
+        $(document).ready(function () {
+
+            var queryMap=[[${queryMap.get('sid')}]]
+            console.log(queryMap);
+            var temp="[[${queryMap.get('order')}]]"
+            console.log(temp);
+
+            if(temp=="price"){
+                // $("#radio").prop('checked', true);
+                // $("#radioDESC").prop('checked', false);
+
+                $("#descend").removeAttr("checked");
+                $("#ascend").attr("checked","checked");
+                console.log("升序");
+            }else {
+                $("#ascend").removeAttr("checked");
+                $("#descend").attr("checked","checked");
+                console.log("降序");
+            }
+
+
+            $.ajax({
+                url: 'getSortList',
+                type: 'get',
+                success: function (data) {
+                    for (var i in data) {
+                        if (data[i].id == queryMap) {
+                            $("#sortList").append("<option value=" + data[i].id + " selected=\"selected\">" + data[i].sortName + "</option>")
+                        }
+                        $("#sortList").append("<option value=" + data[i].id + ">" + data[i].sortName + "</option>")
+                        console.log(data[i]);
+
+                    }
+
+                    // if(temp=="price DESC"){
+                    //     $("#radioDESC").removeAttr("checked");
+                    //     $("#radio").attr("checked","checked");
+                    //
+                    //
+                    //     // $("#radioDESC").prop('checked', true);
+                    //     // $("#radio").prop('checked', false);
+                    // }
+
+
+                    layui.use('form', function () {
+                        var form = layui.form;
+
+                        //各种基于事件的操作，下面会有进一步介绍
+
+                        //但是，如果你的HTML是动态生成的，自动渲染就会失效
+                        //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+                        form.render('select'); //刷新select选择框渲染
+                        form.render('radio');
+                    });
+                }
+            })
+        })
+
+
+
+    </script>
+
+
+
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="end.dao.OrderDao">
+
+
+
+    <select id="findByOid" resultType="end.bean.Orderitem">
+        SELECT * FROM orderitem where oid=#{id,jdbcType=INTEGER}
+    </select>
+
+  <insert id="insertOrderitem" parameterType="end.bean.Orderitem">
+        INSERT INTO orderitem(oid,pid,price,num)
+            VALUES (#{oid,jdbcType=INTEGER},#{pid,jdbcType=INTEGER},#{price,jdbcType=FLOAT},#{num,jdbcType=INTEGER})
+    </insert>
+
+
+
+</mapper>

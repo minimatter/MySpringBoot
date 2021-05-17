@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="index.html">
+
+
+
+<div layout:fragment="content" class="main ">
+    <blockquote class="layui-elem-quote">
+        <h1>商品详情</h1>
+    </blockquote>
+
+        <div class="layui-card">
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md6">
+                    <div class="layui-card-body">
+                        <img th:src="@{${product.fileName}}" style="width:500px;height:400px;" alt="图片">
+                     </div>
+                </div>
+
+                <div class="layui-col-md6">
+                    <div class="layui-card-body">
+                        <form class="layui-form" th:action="@{../cartAdd}">
+
+                            <input th:value="${product.id}" name="pid" hidden>
+                            <input th:value="${product.proName}" name="proName" hidden>
+                            <input th:value="${product.price}" name="price" hidden>
+
+
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">名称：</label>
+                                <h1 th:text="${product.proName}"></h1>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">价格：</label>
+                                <h1 th:text="${product.price}"></h1>
+                            </div>
+
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">数量：</label>
+                                <div class="layui-input-block">
+<!--                                    <a id="subtraction">-->
+<!--                                        <i  class="layui-icon layui-icon-subtraction" style="float: left;"></i>-->
+<!--                                    </a>-->
+
+                                    <input id="numID" type="number" name="num" required  value="1" lay-verify="required"  autocomplete="off" class="layui-input" style="height: 25px;width: 50px;float: left">
+
+<!--                                    <a id="addition">-->
+<!--                                        <i  class="layui-icon layui-icon-addition" style="float: left;"></i>-->
+
+<!--                                    </a>-->
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">
+
+                                </label>
+                                <button type="" class="layui-btn layui-btn-lg layui-btn-danger">加入购物车</button>
+                            </div>
+
+                        </form>
+
+
+
+
+
+
+
+
+                   </div>
+                </div>
+            </div>
+
+
+        </div>
+<script>
+    // $("#subtraction").click(function (){
+    //
+    //
+    //     $("#numID").val(function (n){
+    //         return n*1+1;
+    //     });
+    //
+    // });
+    //
+    // $("#addition").click(function (){
+    //
+    // })
+
+</script>
+
+
+
+
+
+</div>
+
+

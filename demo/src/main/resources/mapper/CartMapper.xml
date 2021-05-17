@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="end.dao.CartDao">
+
+    <select id="queryCart" resultType="end.bean.Cart" parameterType="java.util.Map">
+        SELECT uid,pid,cart.num,product.pro_name as proName,product.price FROM cart,product
+        <where>
+             cart.pid=product.id
+
+            <if test="uid!=null">
+                and uid=#{uid,jdbcType=INTEGER}
+            </if>
+            <if test="pid!=null">
+                and pid=#{pid}
+            </if>
+        </where>
+
+    </select>
+
+    <insert id="cartAdd" parameterType="end.bean.Cart">
+        INSERT INTO cart (uid,pid,num) VALUES (#{uid,jdbcType=INTEGER},#{pid,jdbcType=INTEGER},#{num,jdbcType=INTEGER})
+    </insert>
+
+    <update id="updateCart" parameterType="end.bean.Cart">
+        UPDATE cart SET num=#{num} WHERE uid=#{uid} AND pid=#{pid}
+    </update>
+
+    <delete id="deleteCart" parameterType="java.lang.Integer" >
+        delete from cart where uid=#{uid} AND pid=#{pid}
+    </delete>
+
+</mapper>
